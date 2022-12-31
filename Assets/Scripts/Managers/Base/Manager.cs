@@ -7,9 +7,20 @@ using UnityEngine;
 
 public abstract class Manager<T> : MonoBehaviour 
 {
-	
-    #region UNITY_EVENTS
 
+    #region UNITY_EVENTS
+    public static Manager<T> Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     #endregion
 
     #region EVENTS
