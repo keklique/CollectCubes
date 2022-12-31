@@ -7,7 +7,7 @@ using UnityEngine;
 
 public interface ICollectable
 {
-    void Activate();
-    void Collect();
-    void Instantiate();
+    void SetState(CollectableState _state);
+    CollectableState GetState();
+    void MoveToStore(Transform _transform);
 }
