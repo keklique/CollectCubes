@@ -54,3 +54,4 @@ ExportedObj/
 # IDE
 .vscode/
 .vs/
+.vsconfig
