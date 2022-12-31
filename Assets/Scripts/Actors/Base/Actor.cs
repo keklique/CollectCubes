@@ -5,25 +5,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Actor<T> : MonoBehaviour where T:Manager<T>
+public abstract class Actor<T> : MonoBehaviour where T : Manager<T>
 {
-    public Manager<T> Manager;
-    [Header("Level Design")]
-    private int temp1;
 
-    [Space(15)]
-    [Header("General Variables")]
-    private int temp2;
-
-    [Space(15)]
-    [Header("References")]
-    private int temp3;
-
-
+    public T manager;
     #region UNITY_EVENTS
-    private void Awake()
+    protected virtual void Start()
     {
-        Manager = Manager<T>.Instance;
+        manager = Manager<T>.Instance;
     }
     #endregion
 
