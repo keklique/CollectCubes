@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Actor<T> : MonoBehaviour where T:Manager<T>
 {
-	
+    public Manager<T> Manager;
     [Header("Level Design")]
     private int temp1;
 
@@ -21,7 +21,10 @@ public class Actor<T> : MonoBehaviour where T:Manager<T>
 
 
     #region UNITY_EVENTS
-
+    private void Awake()
+    {
+        Manager = Manager<T>.Instance;
+    }
     #endregion
 
     #region EVENTS
