@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: 
   Layers:
-  - {fileID: 2800000, guid: 07875e4d55f40104ea92ddd7983ce909, type: 3}
-  - {fileID: 2800000, guid: 7e79e240a8b56584dbf8db17f7aa72e4, type: 3}
+  - {fileID: 2800000, guid: fdef492221f23bd45ab15fb3a6d12ead, type: 3}
+  - {fileID: 2800000, guid: 55e79cd80c2b3c24dac36f432317bf92, type: 3}
+  - {fileID: 2800000, guid: 0cfc4a83d93044b49a5d4fb984ae57d2, type: 3}
   LevelType: 0
