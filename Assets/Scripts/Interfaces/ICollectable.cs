@@ -7,7 +7,10 @@ using UnityEngine;
 
 public interface ICollectable
 {
-    void SetState(CollectableState _state);
+    void SetState(CollectableState state);
     CollectableState GetState();
-    void MoveToStore(Transform _transform);
+    void MoveToStore(Transform transform);
+    void ToPool(Transform parent);
+    void SetColor(Color32 color);
+    void Spawn(Vector3 position, Color32 color);
 }

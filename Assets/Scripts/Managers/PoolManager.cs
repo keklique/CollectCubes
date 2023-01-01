@@ -13,15 +13,20 @@ public class PoolManager : Manager<PoolManager>
 
     [Space(15)]
     [Header("General Variables")]
-    private int temp2;
+    [SerializeField] int poolCount = 150;
+    Queue<ICollectable> poolQueue;
 
     [Space(15)]
     [Header("References")]
-    private int temp3;
+    [SerializeField] private Transform poolHolder;
+    [SerializeField] private CubeActor cubePrefab;
 
 
     #region UNITY_EVENTS
-
+    private void Start()
+    {
+        InitPool();
+    }
     #endregion
 
     #region EVENTS
@@ -29,10 +34,32 @@ public class PoolManager : Manager<PoolManager>
     #endregion
 
     #region PUBLIC_METHODS
+    public ICollectable FetchFromPool()
+    {
+        return poolQueue.Count > 0 ? poolQueue.Dequeue() : null;
+    }
 
+    public void AddToPool(ICollectable _collectable)
+    {
+        if (!poolQueue.Contains(_collectable))
+        {
+            _collectable.ToPool(poolHolder);
+            poolQueue.Enqueue(_collectable);
+        }
+    }
     #endregion
 
     #region PRIVATE_METHODS
+    private void InitPool()
+    {
+        poolQueue = new Queue<ICollectable>();
 
+        for (int i = 0; i < poolCount; i++)
+        {
+            CubeActor _cubeActor = Instantiate(cubePrefab, poolHolder);
+            _cubeActor.ToPool(poolHolder);
+            poolQueue.Enqueue(_cubeActor);
+        }
+    }
     #endregion
 }

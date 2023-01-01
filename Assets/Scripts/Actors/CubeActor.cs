@@ -45,6 +45,9 @@ public class CubeActor : Actor<PoolManager>, ICollectable
             case CollectableState.Passive:
                 gameObject.layer = LayerMask.NameToLayer("PassiveCube");
                 break;
+            case CollectableState.AtPool:
+                
+                break;
             default:
                 // code block
                 break;
@@ -65,6 +68,27 @@ public class CubeActor : Actor<PoolManager>, ICollectable
     public void SetColor(Color32 _color)
     {
         meshRenderer.material.color = _color;
+    }
+
+    public void ToPool(Transform _parent)
+    {
+        gameObject.SetActive(false);
+        SetState(CollectableState.AtPool);
+        transform.SetParent(_parent);
+
+        transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
+        transform.localScale = Vector3.one;
+
+        rb.velocity = Vector3.zero;
+    }
+
+    public void Spawn(Vector3 _position, Color32 _color)
+    {
+        SetState(CollectableState.Active);
+        transform.position = _position;
+        SetColor(_color);
+        gameObject.SetActive(true);
     }
     #endregion
 
