@@ -9,5 +9,6 @@ public enum CollectableState
 {
 	Active,
 	Collected,
-	Passive
+	Passive,
+	AtPool
 }
