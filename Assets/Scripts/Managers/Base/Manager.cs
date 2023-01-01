@@ -9,7 +9,7 @@ public abstract class Manager<T> : MonoBehaviour where T:Manager<T>
 {
     public static T Instance;
     #region UNITY_EVENTS
-    private void Awake()
+    protected virtual void Awake()
     {
         if (Instance != null && Instance != this)
         {

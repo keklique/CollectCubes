@@ -10,6 +10,7 @@ public abstract class Actor<T> : MonoBehaviour where T : Manager<T>
 
     public T manager;
     #region UNITY_EVENTS
+
     protected virtual void Start()
     {
         manager = Manager<T>.Instance;
