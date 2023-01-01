@@ -61,6 +61,11 @@ public class CubeActor : Actor<PoolManager>, ICollectable
     {
         return state;
     }
+
+    public void SetColor(Color32 _color)
+    {
+        meshRenderer.material.color = _color;
+    }
     #endregion
 
     #region PRIVATE_METHODS

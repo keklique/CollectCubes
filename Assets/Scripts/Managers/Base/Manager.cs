@@ -19,7 +19,6 @@ public abstract class Manager<T> : MonoBehaviour where T:Manager<T>
         {
             Instance = (T)this;
         }
-        print(Instance);
     }
     #endregion
 
