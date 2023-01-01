@@ -10,7 +10,7 @@ public interface ICollectable
     void SetState(CollectableState state);
     CollectableState GetState();
     void MoveToStore(Transform transform);
-    void ToPool(Transform parent);
+    void ToPool(Transform parent, PoolManager poolManager);
     void SetColor(Color32 color);
     void Spawn(Vector3 position, Color32 color);
 }

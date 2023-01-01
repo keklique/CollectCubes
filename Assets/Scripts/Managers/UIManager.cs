@@ -64,26 +64,29 @@ public class UIManager : Manager<UIManager>
     {
         public PanelType currentPanelType;
     }
+
     private void OnLevelStateChange(object sender, LevelManager.OnLevelStateChangeArgs e)
     {
+        print(e.levelState);
+
         switch (e.levelState)
         {
             case LevelState.Init:
-                //failPanel.SetActive(false);
-                //successPanel.SetActive(false);
-                startPanel.SetActive(true);
+                SetCurrentPanelType(PanelType.Loading);
+                break;
+            case LevelState.Start:
+                SetCurrentPanelType(PanelType.Start);
                 break;
             case LevelState.Play:
-                startPanel.SetActive(false);
+                SetCurrentPanelType(PanelType.InGame);
                 break;
             case LevelState.Success:
-                successPanel.SetActive(true);
+                SetCurrentPanelType(PanelType.Success);
                 break;
             case LevelState.Fail:
-                failPanel.SetActive(true);
+                SetCurrentPanelType(PanelType.Fail);
                 break;
             default:
-                // code block
                 break;
         }
     }
@@ -95,7 +98,6 @@ public class UIManager : Manager<UIManager>
         print("Level Started");
         levelManager.StartLevel();
     }
-
 
     #endregion
 

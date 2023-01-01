@@ -8,6 +8,7 @@ using UnityEngine;
 public enum LevelState 
 {
 	Init,
+	Start,
 	Play,
 	Success,
 	Fail

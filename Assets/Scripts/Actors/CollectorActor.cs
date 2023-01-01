@@ -8,8 +8,6 @@ using UnityEngine;
 public class CollectorActor : Actor<LevelManager>
 {
 	
-    [Header("Level Design")]
-    private int temp1;
 
     [Space(15)]
     [Header("General Variables")]
@@ -20,25 +18,7 @@ public class CollectorActor : Actor<LevelManager>
     [SerializeField] private Rigidbody rb;
 
     #region UNITY_EVENTS
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            AddForce(Vector3.back);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            AddForce(Vector3.forward);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            AddForce(Vector3.right);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            AddForce(Vector3.left);
-        }
-    }
+
     #endregion
 
     #region EVENTS
@@ -48,9 +28,16 @@ public class CollectorActor : Actor<LevelManager>
     #region PUBLIC_METHODS
     public void AddForce(Vector3 _force)
     {
-        //rb.AddForce(_force * temp_speed);
+        rb.velocity = _force;
+        if(_force != Vector3.zero) rb.MoveRotation(Quaternion.LookRotation(_force,Vector3.up));
+    }
 
-        rb.velocity = _force * temp_speed;
+    public void SetPosition(Vector3 _position)
+    {
+        rb.MovePosition(_position);
+        rb.MoveRotation(Quaternion.LookRotation((transform.position * -1f), Vector3.up));
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
     #endregion
 

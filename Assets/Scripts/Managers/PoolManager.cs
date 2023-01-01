@@ -1,6 +1,7 @@
 // PoolManager by Ahmet Keklik
 // e-mail: ahmetkeklik@outlook.com
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,14 +24,24 @@ public class PoolManager : Manager<PoolManager>
 
 
     #region UNITY_EVENTS
+    protected override void Awake()
+    {
+        base.Awake();
+        InitPool();
+    }
     private void Start()
     {
-        InitPool();
+        
     }
     #endregion
 
     #region EVENTS
-
+    public event EventHandler<OnCollectableStateChangedArgs> OnCollectableStateChanged;
+    public class OnCollectableStateChangedArgs : EventArgs
+    {
+        public ICollectable collectable;
+        public CollectableState state;
+    }
     #endregion
 
     #region PUBLIC_METHODS
@@ -43,9 +54,14 @@ public class PoolManager : Manager<PoolManager>
     {
         if (!poolQueue.Contains(_collectable))
         {
-            _collectable.ToPool(poolHolder);
+            _collectable.ToPool(poolHolder, this);
             poolQueue.Enqueue(_collectable);
         }
+    }
+
+    public void CollectableStateChanged(ICollectable _collectable)
+    {
+        OnCollectableStateChanged?.Invoke(this, new OnCollectableStateChangedArgs {collectable = _collectable, state= _collectable.GetState() });;
     }
     #endregion
 
@@ -57,7 +73,7 @@ public class PoolManager : Manager<PoolManager>
         for (int i = 0; i < poolCount; i++)
         {
             CubeActor _cubeActor = Instantiate(cubePrefab, poolHolder);
-            _cubeActor.ToPool(poolHolder);
+            _cubeActor.ToPool(poolHolder, this);
             poolQueue.Enqueue(_cubeActor);
         }
     }

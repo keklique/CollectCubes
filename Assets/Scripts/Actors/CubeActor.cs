@@ -19,6 +19,7 @@ public class CubeActor : Actor<PoolManager>, ICollectable
     [Header("References")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Collider mainCollider;
 
 
     #region UNITY_EVENTS
@@ -34,6 +35,7 @@ public class CubeActor : Actor<PoolManager>, ICollectable
     {
         if (state == _state) return;
         state = _state;
+        manager.CollectableStateChanged(this);
         switch (state)
         {
             case CollectableState.Active:
@@ -70,10 +72,11 @@ public class CubeActor : Actor<PoolManager>, ICollectable
         meshRenderer.material.color = _color;
     }
 
-    public void ToPool(Transform _parent)
+    public void ToPool(Transform _parent, PoolManager _poolManager)
     {
-        gameObject.SetActive(false);
-        SetState(CollectableState.AtPool);
+        StopAllCoroutines();
+        mainCollider.isTrigger = true;
+        manager = _poolManager;
         transform.SetParent(_parent);
 
         transform.localPosition = Vector3.zero;
@@ -81,14 +84,17 @@ public class CubeActor : Actor<PoolManager>, ICollectable
         transform.localScale = Vector3.one;
 
         rb.velocity = Vector3.zero;
+        SetState(CollectableState.AtPool);
+        gameObject.SetActive(false);
     }
 
     public void Spawn(Vector3 _position, Color32 _color)
     {
-        SetState(CollectableState.Active);
         transform.position = _position;
         SetColor(_color);
         gameObject.SetActive(true);
+        mainCollider.isTrigger = false;
+        SetState(CollectableState.Active);
     }
     #endregion
 
