@@ -20,9 +20,23 @@ public class LevelManager : Manager<LevelManager>
     [Header("General")]
     private List<ICollectable> activeCollectables = new List<ICollectable>();
     private List<ICollectable> passiveCollectables = new List<ICollectable>();
+    private Color32 _tempColor;
+    private ICollectable collectable;
+
+    [Header("Timer")]
+    private bool isSpawning;
+    private int score;
+    private float initialCooldown;
+    private float cooldown;
+    private float timer;
 
     #region UNITY_EVENTS
 
+
+    private void Update()
+    {
+        SpawnContiniously();
+    }
     private void Start()
     {
         LoadLevel(currentLevel);
@@ -44,6 +58,13 @@ public class LevelManager : Manager<LevelManager>
     {
         public int levelID;
         public LevelState levelState;
+        public Level level;
+    }
+
+    public event EventHandler<OnScoreChangeArgs> OnScoreChange;
+    public class OnScoreChangeArgs : EventArgs
+    {
+        public int score;
     }
 
     private void OnCollectableStateChanged(object sender, PoolManager.OnCollectableStateChangedArgs e)
@@ -55,6 +76,11 @@ public class LevelManager : Manager<LevelManager>
             if (activeCollectables.Count <= 0 && levels[currentLevel % levels.Length].LevelType == LevelType.Standard)
             {
                 LoadLevel(currentLevel + 1);
+            }
+            if(levels[currentLevel % levels.Length].LevelType == LevelType.Timer)
+            {
+                score++;
+                OnScoreChange?.Invoke(this, new OnScoreChangeArgs { score = score });
             }
         }
 
@@ -74,12 +100,20 @@ public class LevelManager : Manager<LevelManager>
     private void SetLevelState(LevelState _levelState)
     {
         levelState = _levelState;
-        OnLevelStateChange?.Invoke(this, new OnLevelStateChangeArgs { levelID = currentLevel, levelState = levelState });
+        Level _level = levels[currentLevel % levels.Length];
+        OnLevelStateChange?.Invoke(this, new OnLevelStateChangeArgs { levelID = currentLevel, levelState = levelState, level = _level });
+        if(_level.LevelType == LevelType.Timer && levelState == LevelState.Play)
+        {
+            isSpawning = true;
+            initialCooldown = 1f/ (float)_level.SpawnPerSecond;
+            timer = _level.Duration;
+        }
+        else
+        {
+            isSpawning = false;
+        }
     }
-    private void InitLevel()
-    {
-        OnLevelStateChange?.Invoke(this, new OnLevelStateChangeArgs { levelID = currentLevel, levelState= levelState } ) ;
-    }
+
 
     private void ResetLevel()
     {
@@ -93,6 +127,9 @@ public class LevelManager : Manager<LevelManager>
         }
         activeCollectables = new List<ICollectable>();
         passiveCollectables = new List<ICollectable>();
+        score = 0;
+        OnScoreChange?.Invoke(this, new OnScoreChangeArgs { score = score });
+
     }
     private void LoadLevel(int _levelID)
     {
@@ -100,20 +137,61 @@ public class LevelManager : Manager<LevelManager>
         SetLevelState(LevelState.Init);
         ResetLevel();
         Level _level = levels[currentLevel % levels.Length];
+
+        switch (_level.LevelType)
+        {
+            case LevelType.Standard:
+                LoadLevelFromImage(_level);
+                break;
+            case LevelType.Timer:
+                LoadLevelWithTimer(_level);
+                break;
+            case LevelType.Rival:
+                LoadLevelFromImage(_level);
+                break;
+            default:
+                break;
+        }
         
-        for(int i = 0; i<_level.Layers.Count;i++)
+        SetLevelState(LevelState.Start);
+    }
+
+    private void LoadLevelFromImage(Level _level)
+    {
+        initialCooldown = _level.Duration;
+        for (int i = 0; i < _level.Layers.Count; i++)
         {
             CreateLayer(i, _level.Layers[i], cubePrefab);
 
         }
-        SetLevelState(LevelState.Start);
+    }
+
+    private void LoadLevelWithTimer(Level _level)
+    {
+        
+    }
+
+    private void SpawnContiniously()
+    {
+        if (!isSpawning) return;
+        timer -= Time.deltaTime;
+        if (timer <= 0f) LoadLevel(currentLevel++);
+        cooldown += Time.deltaTime;
+        if(cooldown>=initialCooldown)
+        {
+            cooldown = 0f;
+            _tempColor = Color.red;
+            collectable = poolManager.FetchFromPool();
+            activeCollectables.Add(collectable);
+            collectable.Spawn(new Vector3(0f, 3f, 0f), _tempColor, new Vector3(UnityEngine.Random.Range(-3f,3f),0f, UnityEngine.Random.Range(-3f, 3f)));
+        }
+
     }
 
     // Create vertical layers of level
     private void CreateLayer(int _layerNo, Texture2D _layerTexture, ICollectable _collectable)
     {
-        Color32 _tempColor;
-        ICollectable collectable;
+        
         int _width = _layerTexture.width;
         int _height = _layerTexture.height;
         int xOffset = -25;
@@ -129,7 +207,7 @@ public class LevelManager : Manager<LevelManager>
                 if (_tempColor.a == 0) continue;
                 collectable = poolManager.FetchFromPool();
                 activeCollectables.Add(collectable);
-                collectable.Spawn(new Vector3(j + xOffset, _layerNo + 0.5f, i + zOffset), _tempColor);
+                collectable.Spawn(new Vector3(j + xOffset, _layerNo + 0.5f, i + zOffset), _tempColor, Vector3.zero);
             }
         }
     }

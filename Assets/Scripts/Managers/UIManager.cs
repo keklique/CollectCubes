@@ -35,26 +35,7 @@ public class UIManager : Manager<UIManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            SetCurrentPanelType(PanelType.Loading);
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SetCurrentPanelType(PanelType.Start);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SetCurrentPanelType(PanelType.InGame);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            SetCurrentPanelType(PanelType.Success);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SetCurrentPanelType(PanelType.Fail);
-        }
+
     }
     #endregion
 
@@ -65,26 +46,33 @@ public class UIManager : Manager<UIManager>
         public PanelType currentPanelType;
     }
 
+    public event EventHandler<OnTimerInitArgs> OnOnTimerInit;
+    public class OnTimerInitArgs : EventArgs
+    {
+        public Level level;
+        public bool isTimer;
+    }
+
+    
+
     private void OnLevelStateChange(object sender, LevelManager.OnLevelStateChangeArgs e)
     {
-        print(e.levelState);
-
         switch (e.levelState)
         {
             case LevelState.Init:
-                SetCurrentPanelType(PanelType.Loading);
+                SetCurrentPanelType(PanelType.Loading, e.level);
                 break;
             case LevelState.Start:
-                SetCurrentPanelType(PanelType.Start);
+                SetCurrentPanelType(PanelType.Start, e.level);
                 break;
             case LevelState.Play:
-                SetCurrentPanelType(PanelType.InGame);
+                SetCurrentPanelType(PanelType.InGame, e.level);
                 break;
             case LevelState.Success:
-                SetCurrentPanelType(PanelType.Success);
+                SetCurrentPanelType(PanelType.Success, e.level);
                 break;
             case LevelState.Fail:
-                SetCurrentPanelType(PanelType.Fail);
+                SetCurrentPanelType(PanelType.Fail, e.level);
                 break;
             default:
                 break;
@@ -95,7 +83,6 @@ public class UIManager : Manager<UIManager>
     #region PUBLIC_METHODS
     public void StartLevel()
     {
-        print("Level Started");
         levelManager.StartLevel();
     }
 
@@ -103,10 +90,18 @@ public class UIManager : Manager<UIManager>
 
     #region PRIVATE_METHODS
 
-    private void SetCurrentPanelType(PanelType _panelType)
+    private void SetCurrentPanelType(PanelType _panelType, Level _level)
     {
         currentPanelType = _panelType;
         OnPanelTypeChanged?.Invoke(this, new OnPanelTypeChangedArgs { currentPanelType = currentPanelType });
+        if (_level.LevelType == LevelType.Timer)
+        {
+            OnOnTimerInit?.Invoke(this, new OnTimerInitArgs { level = _level, isTimer = true });
+        }
+        else
+        {
+            OnOnTimerInit?.Invoke(this, new OnTimerInitArgs { level = _level, isTimer = false });
+        }
     }
 
     private void RegisterPanels()

@@ -88,13 +88,14 @@ public class CubeActor : Actor<PoolManager>, ICollectable
         gameObject.SetActive(false);
     }
 
-    public void Spawn(Vector3 _position, Color32 _color)
+    public void Spawn(Vector3 _position, Color32 _color, Vector3 _initialForce)
     {
         transform.position = _position;
         SetColor(_color);
         gameObject.SetActive(true);
         mainCollider.isTrigger = false;
         SetState(CollectableState.Active);
+        rb.AddForce(_initialForce * rb.mass * 50f);
     }
     #endregion
 
