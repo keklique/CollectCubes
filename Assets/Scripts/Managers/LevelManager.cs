@@ -180,7 +180,7 @@ public class LevelManager : Manager<LevelManager>
         if(cooldown>=initialCooldown)
         {
             cooldown = 0f;
-            _tempColor = Color.red;
+            _tempColor = new Color(UnityEngine.Random.Range(0,1f), UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f),1f);
             collectable = poolManager.FetchFromPool();
             activeCollectables.Add(collectable);
             collectable.Spawn(new Vector3(0f, 3f, 0f), _tempColor, new Vector3(UnityEngine.Random.Range(-3f,3f),0f, UnityEngine.Random.Range(-3f, 3f)));
