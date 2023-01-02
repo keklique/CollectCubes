@@ -131,6 +131,7 @@ public class LevelManager : Manager<LevelManager>
         passiveCollectables = new List<ICollectable>();
         score = 0;
         OnScoreChange?.Invoke(this, new OnScoreChangeArgs { score = score });
+        if (rivalActor != null) Destroy(rivalActor.gameObject);
 
     }
     private void LoadLevel(int _levelID)
@@ -139,7 +140,7 @@ public class LevelManager : Manager<LevelManager>
         SetLevelState(LevelState.Init);
         ResetLevel();
         Level _level = levels[currentLevel % levels.Length];
-
+        
         switch (_level.LevelType)
         {
             case LevelType.Standard:
@@ -150,7 +151,6 @@ public class LevelManager : Manager<LevelManager>
                 break;
             case LevelType.Rival:
                 LoadLevelWithTimer(_level);
-                if (rivalActor != null) Destroy(rivalActor.gameObject);
                 rivalActor = Instantiate(rivalPrefab, Vector3.zero, Quaternion.identity);
                 break;
             default:
@@ -179,7 +179,7 @@ public class LevelManager : Manager<LevelManager>
     {
         if (!isSpawning) return;
         timer -= Time.deltaTime;
-        if (timer <= 0f) LoadLevel(currentLevel++);
+        if (timer <= 0f) LoadLevel(currentLevel+1);
         cooldown += Time.deltaTime;
         if(cooldown>=initialCooldown)
         {
