@@ -150,6 +150,7 @@ public class LevelManager : Manager<LevelManager>
                 break;
             case LevelType.Rival:
                 LoadLevelWithTimer(_level);
+                if (rivalActor != null) Destroy(rivalActor.gameObject);
                 rivalActor = Instantiate(rivalPrefab, Vector3.zero, Quaternion.identity);
                 break;
             default:

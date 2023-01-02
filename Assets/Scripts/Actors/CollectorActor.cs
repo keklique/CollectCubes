@@ -12,6 +12,7 @@ public class CollectorActor : Actor<LevelManager>
     [Space(15)]
     [Header("General Variables")]
     public float temp_speed = 10f;
+    [SerializeField] private string layerMask;
 
     [Space(15)]
     [Header("References")]

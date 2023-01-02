@@ -33,6 +33,11 @@ public class RivalActor : Actor<LevelManager>
         storeActor.SetColor(Color.red);
     }
 
+    private void OnDisable()
+    {
+        manager.OnLevelStateChange -= OnLevelStateChange;
+    }
+
     private void Update()
     {
         if (!isActive) return;

@@ -104,6 +104,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4824052073751733311, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 8192
+      objectReference: {fileID: 0}
     - target: {fileID: 5854625106551134451, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -174,6 +178,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761e0a680483e474a88f82a9fb566441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2432297046932075392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 138842641174723179, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
+  m_PrefabInstance: {fileID: 2318234382793132523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5764546306109753904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432297046932075392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a88443688230f4fa09972ec934d0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask: RivalsCube
 --- !u!1001 &6848855848329350232
 PrefabInstance:
   m_ObjectHideFlags: 0

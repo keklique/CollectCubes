@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
+  speed: 3000
   collectorActor: {fileID: 8482257798188141865}
 --- !u!1001 &3982714014894385430
 PrefabInstance:
@@ -54,6 +55,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2266013626819237866}
     m_Modifications:
+    - target: {fileID: 1766584322, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 138842641174723177, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -74,6 +79,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4824052073751733311, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 4096
+      objectReference: {fileID: 0}
     - target: {fileID: 7491846191561869799, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -88,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7491846191561869799, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25.92
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 7491846191561869799, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -140,6 +149,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761e0a680483e474a88f82a9fb566441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3938457170745135997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 138842641174723179, guid: 2e3cdba9c568cf44d9c03673fcdf06ba, type: 3}
+  m_PrefabInstance: {fileID: 3982714014894385430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9070742237318997886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3938457170745135997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a88443688230f4fa09972ec934d0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask: PlayersCube
 --- !u!1001 &5216701859091426469
 PrefabInstance:
   m_ObjectHideFlags: 0

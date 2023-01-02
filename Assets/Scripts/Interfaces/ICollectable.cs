@@ -13,4 +13,5 @@ public interface ICollectable
     void ToPool(Transform parent, PoolManager poolManager);
     void SetColor(Color32 color);
     void Spawn(Vector3 position, Color32 color, Vector3 initialForce);
+    void SetLayer(string layer);
 }

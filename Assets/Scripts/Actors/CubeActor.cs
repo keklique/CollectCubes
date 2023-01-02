@@ -97,6 +97,11 @@ public class CubeActor : Actor<PoolManager>, ICollectable
         SetState(CollectableState.Active);
         rb.AddForce(_initialForce * rb.mass * 50f);
     }
+
+    public void SetLayer(string _layer)
+    {
+        gameObject.layer = LayerMask.NameToLayer(_layer); ;
+    }
     #endregion
 
     #region PRIVATE_METHODS

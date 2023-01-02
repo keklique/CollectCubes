@@ -15,4 +15,4 @@ MonoBehaviour:
   Layers: []
   LevelType: 1
   Duration: 60
-  SpawnPerSecond: 3
+  SpawnPerSecond: 6
