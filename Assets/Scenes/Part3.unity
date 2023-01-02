@@ -1736,10 +1736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 11400000, guid: 53e69855ebd3385458ff8aecdbb1b9e0, type: 2}
-  - {fileID: 11400000, guid: e0f4be148993c9442a3bb14d5e5519d3, type: 2}
   - {fileID: 11400000, guid: e640e3b5c176577499799a767c748315, type: 2}
-  - {fileID: 11400000, guid: bd4bcf4c9f9bdc94a95c7024ccea5d80, type: 2}
   cubePrefab: {fileID: 5333998724630593493, guid: 8e103e4c55566f849a4a07f5b92f1ea0, type: 3}
   poolManager: {fileID: 1747661339}
   rivalPrefab: {fileID: 2372321998491049218, guid: b8acd9ac2e5e16f4bbfc959248245064, type: 3}

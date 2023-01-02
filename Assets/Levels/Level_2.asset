@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda2879f79520d74bbb97598ed41de02, type: 3}
   m_Name: Level_2
   m_EditorClassIdentifier: 
-  Layers: []
+  Layers:
+  - {fileID: 2800000, guid: 07875e4d55f40104ea92ddd7983ce909, type: 3}
+  - {fileID: 2800000, guid: 7e79e240a8b56584dbf8db17f7aa72e4, type: 3}
   LevelType: 0
+  Duration: 30
+  SpawnPerSecond: 3
