@@ -15,6 +15,7 @@ public class LevelManager : Manager<LevelManager>
     [Header("References")]
     [SerializeField] private CubeActor cubePrefab;
     [SerializeField] private PoolManager poolManager;
+    [SerializeField] private RivalActor rivalPrefab;
 
     [Space(15)]
     [Header("General")]
@@ -22,6 +23,7 @@ public class LevelManager : Manager<LevelManager>
     private List<ICollectable> passiveCollectables = new List<ICollectable>();
     private Color32 _tempColor;
     private ICollectable collectable;
+    private RivalActor rivalActor;
 
     [Header("Timer")]
     private bool isSpawning;
@@ -77,7 +79,7 @@ public class LevelManager : Manager<LevelManager>
             {
                 LoadLevel(currentLevel + 1);
             }
-            if(levels[currentLevel % levels.Length].LevelType == LevelType.Timer)
+            if(levels[currentLevel % levels.Length].LevelType == LevelType.Timer || levels[currentLevel % levels.Length].LevelType == LevelType.Rival)
             {
                 score++;
                 OnScoreChange?.Invoke(this, new OnScoreChangeArgs { score = score });
@@ -102,7 +104,7 @@ public class LevelManager : Manager<LevelManager>
         levelState = _levelState;
         Level _level = levels[currentLevel % levels.Length];
         OnLevelStateChange?.Invoke(this, new OnLevelStateChangeArgs { levelID = currentLevel, levelState = levelState, level = _level });
-        if(_level.LevelType == LevelType.Timer && levelState == LevelState.Play)
+        if((levels[currentLevel % levels.Length].LevelType == LevelType.Timer || levels[currentLevel % levels.Length].LevelType == LevelType.Rival) && levelState == LevelState.Play)
         {
             isSpawning = true;
             initialCooldown = 1f/ (float)_level.SpawnPerSecond;
@@ -147,7 +149,8 @@ public class LevelManager : Manager<LevelManager>
                 LoadLevelWithTimer(_level);
                 break;
             case LevelType.Rival:
-                LoadLevelFromImage(_level);
+                LoadLevelWithTimer(_level);
+                rivalActor = Instantiate(rivalPrefab, Vector3.zero, Quaternion.identity);
                 break;
             default:
                 break;
@@ -183,7 +186,7 @@ public class LevelManager : Manager<LevelManager>
             _tempColor = new Color(UnityEngine.Random.Range(0,1f), UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f),1f);
             collectable = poolManager.FetchFromPool();
             activeCollectables.Add(collectable);
-            collectable.Spawn(new Vector3(0f, 3f, 0f), _tempColor, new Vector3(UnityEngine.Random.Range(-3f,3f),0f, UnityEngine.Random.Range(-3f, 3f)));
+            collectable.Spawn(new Vector3(0f, 3f, 0f), _tempColor, new Vector3(UnityEngine.Random.Range(-30f,30f),0f, UnityEngine.Random.Range(-10f, 10f)));
         }
 
     }

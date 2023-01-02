@@ -76,12 +76,12 @@ public class PlayerControllerActor : Actor<LevelManager>
             
             if((currentInput - previousInput).magnitude > 0.3f)
             {
-                collectorActor.AddForce((currentInput - previousInput).normalized * speed * Time.deltaTime);
+                collectorActor.SetVelocity((currentInput - previousInput).normalized * speed * Time.deltaTime);
                 previousInput += (currentInput - previousInput)/50f;
             }
             else
             {
-                collectorActor.AddForce(Vector3.zero);
+                collectorActor.SetVelocity(Vector3.zero);
                 previousInput = currentInput;
             }
             
@@ -89,7 +89,7 @@ public class PlayerControllerActor : Actor<LevelManager>
 
         if (Input.GetMouseButtonUp(0))
         {
-            collectorActor.AddForce(Vector3.zero);
+            collectorActor.SetVelocity(Vector3.zero);
 
         }
 

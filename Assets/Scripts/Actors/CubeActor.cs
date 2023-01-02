@@ -57,9 +57,9 @@ public class CubeActor : Actor<PoolManager>, ICollectable
 
     }
 
-    public void MoveToStore(Transform _target)
+    public void MoveToStore(Transform _target, Color _color)
     {
-        StartCoroutine(MoveToStoreCoroutine(_target));
+        StartCoroutine(MoveToStoreCoroutine(_target, _color));
     }
 
     public CollectableState GetState()
@@ -100,10 +100,10 @@ public class CubeActor : Actor<PoolManager>, ICollectable
     #endregion
 
     #region PRIVATE_METHODS
-    private IEnumerator MoveToStoreCoroutine(Transform _transform)
+    private IEnumerator MoveToStoreCoroutine(Transform _transform, Color _color)
     {
         SetState(CollectableState.Passive);
-        SetColor(Color.yellow);
+        SetColor(_color);
         WaitForSeconds wait = new WaitForSeconds(0.01f);
         for(int i = 0; i<100;i++)
         {

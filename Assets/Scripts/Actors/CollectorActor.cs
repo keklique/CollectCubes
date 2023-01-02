@@ -26,10 +26,10 @@ public class CollectorActor : Actor<LevelManager>
     #endregion
 
     #region PUBLIC_METHODS
-    public void AddForce(Vector3 _force)
+    public void SetVelocity(Vector3 _velocity)
     {
-        rb.velocity = _force;
-        if(_force != Vector3.zero) rb.MoveRotation(Quaternion.LookRotation(_force,Vector3.up));
+        rb.velocity = _velocity;
+        if(_velocity != Vector3.zero) rb.MoveRotation(Quaternion.LookRotation(_velocity, Vector3.up));
     }
 
     public void SetPosition(Vector3 _position)
@@ -38,6 +38,11 @@ public class CollectorActor : Actor<LevelManager>
         rb.MoveRotation(Quaternion.LookRotation((transform.position * -1f), Vector3.up));
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+    }
+
+    public Vector3 GetCollectorPosition()
+    {
+        return rb.position;
     }
     #endregion
 

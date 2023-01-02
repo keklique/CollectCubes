@@ -94,7 +94,7 @@ public class UIManager : Manager<UIManager>
     {
         currentPanelType = _panelType;
         OnPanelTypeChanged?.Invoke(this, new OnPanelTypeChangedArgs { currentPanelType = currentPanelType });
-        if (_level.LevelType == LevelType.Timer)
+        if (_level.LevelType == LevelType.Timer || _level.LevelType == LevelType.Rival)
         {
             OnOnTimerInit?.Invoke(this, new OnTimerInitArgs { level = _level, isTimer = true });
         }

@@ -13,7 +13,7 @@ public class StoreActor : Actor<LevelManager>
 
     [Space(15)]
     [Header("General Variables")]
-    private int temp2;
+    private Color color = Color.yellow;
 
     [Space(15)]
     [Header("References")]
@@ -25,7 +25,7 @@ public class StoreActor : Actor<LevelManager>
     {
         if (other.TryGetComponent(out ICollectable collectable))
         {
-           if(collectable.GetState() != CollectableState.Passive) collectable.MoveToStore(transform);
+           if(collectable.GetState() != CollectableState.Passive) collectable.MoveToStore(transform,color);
         }
     }
     #endregion
@@ -35,7 +35,10 @@ public class StoreActor : Actor<LevelManager>
     #endregion
 
     #region PUBLIC_METHODS
-
+    public void SetColor(Color _color)
+    {
+        color = _color;
+    }
     #endregion
 
     #region PRIVATE_METHODS
